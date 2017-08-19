@@ -44,6 +44,10 @@ class Event extends Model
     {
         return $this->belongsToMany('App\Round')->orderBy('orderWeight');
     }
+    public function scoreSheets()
+    {
+        return $this->hasMany('App\ScoreSheet');
+    }
     /*
     |--------------------------------------------------------------------------
     | SCOPES

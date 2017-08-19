@@ -31,7 +31,15 @@ class Score extends Model
     | RELATIONS
     |--------------------------------------------------------------------------
     */
-    
+    public function scoresheet()
+    {
+        return $this->belongsTo('App\ScoreSheet');
+    }
+
+    public function team()
+    {
+        return $this->belongsTo('App\Team');
+    }
     /*
     |--------------------------------------------------------------------------
     | SCOPES
@@ -43,10 +51,14 @@ class Score extends Model
     | ACCESORS
     |--------------------------------------------------------------------------
     */
-
+   
     /*
     |--------------------------------------------------------------------------
     | MUTATORS
     |--------------------------------------------------------------------------
     */
+    public function getTotalAttribute($value)
+    {
+        return ($this->attributes['taste'] * 0.5 + $this->attributes['texture'] * 0.35 + $this->attributes['appearance'] * 0.15);
+    }
 }

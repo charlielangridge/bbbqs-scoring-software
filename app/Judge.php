@@ -35,6 +35,10 @@ class Judge extends Model
     {
         return $this->belongsToMany('App\Event');
     }
+    public function scoreSheets()
+    {
+        return $this->hasMany('App\ScoreSheet');
+    }
     /*
     |--------------------------------------------------------------------------
     | SCOPES

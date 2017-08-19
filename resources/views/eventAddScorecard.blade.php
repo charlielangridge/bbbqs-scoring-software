@@ -41,16 +41,16 @@
                 <thead>
                     <th>Team</th>
                     <th>Appearance</th>
-                    <th>Texture</th>
                     <th>Taste</th>
+                    <th>Texture</th>
                 </thead>
                 <tbody>
                     @for ($i = 1; $i <= 6; $i++)
                     <tr>
-                        <td><input type="number" name="team[{{$i}}]" required min="0" max="10"></td>
+                        <td><input type="number" name="team[{{$i}}]" required min="0"></td>
                         <td><input type="number" name="appearance[{{$i}}]" required min="0" max="10"></td>
-                        <td><input type="number" name="texture[{{$i}}]" required min="0" max="10"></td>
                         <td><input type="number" name="taste[{{$i}}]" required min="0" max="10"></td>
+                        <td><input type="number" name="texture[{{$i}}]" required min="0" max="10"></td>
                     </tr>
                     @endfor
                 </tbody>

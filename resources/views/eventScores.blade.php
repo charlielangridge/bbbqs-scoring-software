@@ -17,17 +17,25 @@
                 </tr>
             </thead>
             <tbody>
+            @for ($i = 1; $i <= $event->teams->count(); $i++)
                 <tr>
-                    <td>1</td>
-                    <td>Team Name</td>
-                    <td>Team Name</td>
-                    <td>Team Name</td>
-                    <td>Team Name</td>
-                    <td>Team Name</td>
+                    <td>{{$i}}</td>
+                    <td>{{$overallResults[$i]}}</td>
+                    @foreach($event->rounds as $round)
+                    <td>{{$results[$round->id][$i]}}</td>
+                    @endforeach
+                    
                 </tr>
+            @endfor
             </tbody>
         </table>
         <a href="{{url('events/'.$event->id.'/addScorecard')}}">Add Scorecard</a>
+        <h3>Scores Recored</h3>
+        <ul>
+            @foreach ($rounds as $round)
+                <li @if($event->teams->count() * 6 == $recordedScores[$round->id]) style="color: green" @else style="color: red" @endif>{{$round->name}} - {{$event->teams->count() * 6}} Expected - {{$recordedScores[$round->id]}} Recorded</li>
+            @endforeach
+        </ul>
     </div>
 </div>
 @endsection
