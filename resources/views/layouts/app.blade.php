@@ -12,9 +12,15 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
 </head>
 <body>
     <div id="app">
+    @foreach (Alert::getMessages() as $type => $messages)
+        @foreach ($messages as $message)
+            <div class="alert alert-{{ $type }}">{{ $message }}</div>
+        @endforeach
+    @endforeach
         <nav class="navbar navbar-default navbar-static-top">
             <div class="container">
                 <div class="navbar-header">
@@ -70,8 +76,26 @@
                 </div>
             </div>
         </nav>
-
-        @yield('content')
+        @if(\Auth::check())
+        <div class="container">
+            <div class="row">
+                <div class="col-md-2">
+                    @include('layouts.menu')
+                </div>
+                <div class="col-md-10">
+                    @yield('content')
+                </div>
+            </div>
+        </div>  
+        @else
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8 col-pre-2">
+                    @yield('content')
+                </div>
+            </div>
+        </div>
+        @endif
     </div>
 
     <!-- Scripts -->

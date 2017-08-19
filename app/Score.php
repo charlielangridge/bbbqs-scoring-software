@@ -4,19 +4,19 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class ScoreSheet extends Model
+class Score extends Model
 {
-    /*
+     /*
     |--------------------------------------------------------------------------
     | GLOBAL VARIABLES
     |--------------------------------------------------------------------------
     */
 
-    protected $table = 'score_sheets';
+    protected $table = 'scores';
     protected $primaryKey = 'id';
     // public $timestamps = false;
     // protected $guarded = ['id'];
-    protected $fillable = ['event_id','judge_id','round_id','table'];
+    protected $fillable = ['scoresheet_id','team_id','appearance','texture', 'taste'];
     // protected $hidden = [];
     // protected $dates = [];
 

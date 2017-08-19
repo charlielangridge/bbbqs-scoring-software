@@ -31,7 +31,19 @@ class Event extends Model
     | RELATIONS
     |--------------------------------------------------------------------------
     */
-    
+
+    public function teams()
+    {
+        return $this->belongsToMany('App\Team')->orderBy('name');
+    }
+    public function judges()
+    {
+        return $this->belongsToMany('App\Judge')->orderBy('name');
+    }
+    public function rounds()
+    {
+        return $this->belongsToMany('App\Round')->orderBy('orderWeight');
+    }
     /*
     |--------------------------------------------------------------------------
     | SCOPES

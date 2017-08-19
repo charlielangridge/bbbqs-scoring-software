@@ -4,19 +4,19 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class ScoreSheet extends Model
+class Team extends Model
 {
-    /*
+     /*
     |--------------------------------------------------------------------------
     | GLOBAL VARIABLES
     |--------------------------------------------------------------------------
     */
 
-    protected $table = 'score_sheets';
+    protected $table = 'teams';
     protected $primaryKey = 'id';
     // public $timestamps = false;
     // protected $guarded = ['id'];
-    protected $fillable = ['event_id','judge_id','round_id','table'];
+    protected $fillable = ['name','pitmasterName','email','phone'];
     // protected $hidden = [];
     // protected $dates = [];
 
@@ -31,7 +31,10 @@ class ScoreSheet extends Model
     | RELATIONS
     |--------------------------------------------------------------------------
     */
-    
+    public function events()
+    {
+        return $this->belongsToMany('App\Event');
+    }
     /*
     |--------------------------------------------------------------------------
     | SCOPES

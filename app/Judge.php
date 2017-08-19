@@ -12,11 +12,11 @@ class Judge extends Model
     |--------------------------------------------------------------------------
     */
 
-    protected $table = 'scoresheets';
+    protected $table = 'judges';
     protected $primaryKey = 'id';
     // public $timestamps = false;
     // protected $guarded = ['id'];
-    protected $fillable = ['firstName','lastName','email','phone', 'address'];
+    protected $fillable = ['name','email','phone'];
     // protected $hidden = [];
     // protected $dates = [];
 
@@ -31,7 +31,10 @@ class Judge extends Model
     | RELATIONS
     |--------------------------------------------------------------------------
     */
-    
+    public function events()
+    {
+        return $this->belongsToMany('App\Event');
+    }
     /*
     |--------------------------------------------------------------------------
     | SCOPES

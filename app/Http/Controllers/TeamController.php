@@ -2,11 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use App\Judge;
+use App\Team;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
-class JudgeController extends Controller
+class TeamController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
+
     /**
      * Display a listing of the resource.
      *
@@ -14,9 +22,9 @@ class JudgeController extends Controller
      */
     public function index()
     {
-        $page = 'judges';
-        $judges = Judge::all();
-        return view('judges', compact('page','judges'));
+        $page = 'teams';
+        $teams = Team::all();
+        return view('teams', compact('page','teams'));
     }
 
     /**
@@ -28,15 +36,17 @@ class JudgeController extends Controller
     {
         $this->validate($request,[
             'name' => 'required|unique:teams|max:255',
+            'pitmasterName' => 'required|max:255',
             'email' => 'required|email',
             'phone' => 'required|min:11'
         ]);
 
-        $judge = new Judge;
-        $judge->name = $request->name;
-        $judge->email = $request->email;
-        $judge->phone = $request->phone;
-        $judge->save();
+        $team = new Team;
+        $team->name = $request->name;
+        $team->pitmasterName = $request->pitmasterName;
+        $team->email = $request->email;
+        $team->phone = $request->phone;
+        $team->save();
         return back();
     }
 
@@ -54,10 +64,10 @@ class JudgeController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Team  $team
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Team $team)
     {
         //
     }
@@ -65,46 +75,48 @@ class JudgeController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Team  $team
      * @return \Illuminate\Http\Response
      */
-    public function edit(Judge $judge)
+    public function edit(Team $team)
     {
-        $page = 'judges';
-        return view('editJudge', compact('page','judge'));        //
+        $page = 'teams';
+        return view('editTeam', compact('page','team'));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \App\Team  $team
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Judge $judge)
+    public function update(Request $request, Team $team)
     {
-       $this->validate($request,[
+        $this->validate($request,[
             'name' => 'required|max:255',
+            'pitmasterName' => 'required|max:255',
             'email' => 'required|email',
             'phone' => 'required|min:11'
         ]);
 
-        $judge->name = $request->name;
-        $judge->email = $request->email;
-        $judge->phone = $request->phone;
-        $judge->save();
-        return redirect()->route('judges');
+        $team->name = $request->name;
+        $team->pitmasterName = $request->pitmasterName;
+        $team->email = $request->email;
+        $team->phone = $request->phone;
+        $team->save();
+        return redirect()->route('teams');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  \App\Team  $team
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Judge $judge)
+    public function destroy(Team $team)
     {
-        $judge->delete();
+        $team->delete();
         return back();
     }
 }
