@@ -197,6 +197,7 @@ class EventController extends Controller
                 $roundScores[$eventScore->scoreSheet->round_id]++;
             }
         }
+
         foreach ($rounds as $round) {
             if(!isset($roundScores[$round->id]))
             {
@@ -211,7 +212,10 @@ class EventController extends Controller
         $teamTotals = [];
         foreach ($event->rounds as $round) {
             // are all the scores in?
-            if ($event->teams->count() * 6 === $roundScores[$round->id])
+            // dump($roundScores);
+                // dump($round->id.' - '. $roundScores[$round->id]);
+            // if ($event->teams->count() * 6 === $roundScores[$round->id])
+            if (1==1)
             {
                 $GCCheck[$round->id] = 1;
                 $roundScores = Score::
@@ -353,7 +357,17 @@ class EventController extends Controller
         DB::commit();
         $page = 'events';
         $rounds = Round::orderBy('orderWeight')->get();
-        return view('eventScores', compact('event', 'page', 'rounds'));
+        // return view('eventScores', compact('event', 'page', 'rounds'));
+        return redirect('events/'.$event->id.'/scores');
+    }
 
+    public function resultsSheets(Event $event)
+    {
+        $teams = $event->teams;
+        $pdf = \PDF::loadView('pdfs.scoreSheets', compact('event','teams'));
+        return $pdf->stream();
+
+        return view('pdfs.scoreSheets', compact('event','teams'));
+        dd($teams);
     }
 }

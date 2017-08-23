@@ -9,6 +9,7 @@
         <table class="table table-striped">
             <thead>
                 <tr>
+                    <th>ID</th>
                     <th>Name</th>
                     <th>Email</th>
                     <th>Phone</th>
@@ -18,6 +19,7 @@
             <tbody>
                 @foreach($judges as $judge)
                 <tr>
+                    <td>{{$judge->id}}</td>
                     <td>{{$judge->name}}</td>
                     <td><a href="mailto::{{$judge->email}}">{{$judge->email}}</a></td>
                     <td>{{$judge->phone}}</td>

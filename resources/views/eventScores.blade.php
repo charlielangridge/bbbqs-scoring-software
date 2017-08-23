@@ -20,7 +20,7 @@
             @for ($i = 1; $i <= $event->teams->count(); $i++)
                 <tr>
                     <td>{{$i}}</td>
-                    <td>{{$overallResults[$i]}}</td>
+                    <td>@if(isset($overallResults)){{$overallResults[$i]}}@endif</td>
                     @foreach($event->rounds as $round)
                     <td>{{$results[$round->id][$i]}}</td>
                     @endforeach
@@ -36,6 +36,7 @@
                 <li @if($event->teams->count() * 6 == $recordedScores[$round->id]) style="color: green" @else style="color: red" @endif>{{$round->name}} - {{$event->teams->count() * 6}} Expected - {{$recordedScores[$round->id]}} Recorded</li>
             @endforeach
         </ul>
+        <h4><a href="{{url('/events/'.$event->id.'/resultsSheets')}}" target="blank">Results Sheets</a></h4>
     </div>
 </div>
 @endsection

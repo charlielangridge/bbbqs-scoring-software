@@ -49,6 +49,7 @@ Route::get('/events/{event}/rounds/{round}/add', 'EventController@addRound')->na
 Route::get('/events/{event}/rounds/{round}/remove', 'EventController@removeRound')->name('eventRemoveRound');
 Route::get('/events/{event}/addScorecard', 'EventController@addScorecard')->name('eventAddScorecard');
 Route::post('/events/{event}/addScore', 'EventController@addScore')->name('eventAddScore');
+Route::get('/events/{event}/resultsSheets', 'EventController@resultsSheets')->name('resultsSheets');
 
 
 Route::get('/rounds', 'RoundController@index')->name('rounds');
