@@ -4,19 +4,19 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Round extends Model
+class JudgeNote extends Model
 {
-	/*
+    /*
     |--------------------------------------------------------------------------
     | GLOBAL VARIABLES
     |--------------------------------------------------------------------------
     */
 
-    protected $table = 'rounds';
+    protected $table = 'judge_notes';
     protected $primaryKey = 'id';
     // public $timestamps = false;
     // protected $guarded = ['id'];
-    protected $fillable = ['name','compulsory', 'orderWeight','main'];
+    protected $fillable = ['content','event_id','judge_id','round_id','team_id'];
     // protected $hidden = [];
     // protected $dates = [];
 
@@ -31,17 +31,21 @@ class Round extends Model
     | RELATIONS
     |--------------------------------------------------------------------------
     */
-    public function events()
+    public function event()
     {
-        return $this->belongsToMany('App\Event');
+        return $this->belongsTo('App\Event');
     }
-    public function scoreSheets()
+    public function judge()
     {
-        return $this->hasMany('App\ScoreSheet');
-    }
-    public function judgeNotes()
+        return $this->belongsTo('App\Judge');
+    }    
+    public function round()
     {
-        return $this->hasMany('App\JudgeNote');
+        return $this->belongsTo('App\Round');
+    }    
+    public function team()
+    {
+        return $this->belongsTo('App\Team');
     }
     /*
     |--------------------------------------------------------------------------

@@ -40,6 +40,10 @@ class Team extends Model
     {
         return $this->hasMany('App\Score');
     }
+    public function judgeNotes()
+    {
+        return $this->hasMany('App\JudgeNote');
+    }
     /*
     |--------------------------------------------------------------------------
     | SCOPES

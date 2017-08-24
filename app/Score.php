@@ -33,7 +33,7 @@ class Score extends Model
     */
     public function scoresheet()
     {
-        return $this->belongsTo('App\ScoreSheet');
+        return $this->belongsTo('App\ScoreSheet')->orderBy('round_id');
     }
 
     public function team()

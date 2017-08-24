@@ -50,6 +50,9 @@ Route::get('/events/{event}/rounds/{round}/remove', 'EventController@removeRound
 Route::get('/events/{event}/addScorecard', 'EventController@addScorecard')->name('eventAddScorecard');
 Route::post('/events/{event}/addScore', 'EventController@addScore')->name('eventAddScore');
 Route::get('/events/{event}/resultsSheets', 'EventController@resultsSheets')->name('resultsSheets');
+Route::get('/events/{event}/judgeNotes', 'EventController@judgeNotes')->name('eventJudgeNotes');
+Route::post('/events/{event}/addJudgeNote', 'EventController@addJudgeNote')->name('eventAddJudgeNote');
+Route::get('/events/{event}/deleteComment/{note}', 'EventController@deleteJudgeNote')->name('eventDeleteJ	udgeNote');
 
 
 Route::get('/rounds', 'RoundController@index')->name('rounds');

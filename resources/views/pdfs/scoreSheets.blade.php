@@ -20,19 +20,54 @@
 	<script src="js/vendor/modernizr-2.8.3-respond-1.4.2.min.js"></script>
 </head>
 <body>
-@foreach($teams as $team)
+@foreach($teamResults as $team)
 	<div class="container">
 		<div class="row">
 			<div class="col-sm-12">
 				<h3>{{$event->name}} - {{$event->date}}</h3>
 				<h1>{{$team->name}}</h1>
 			</div>
-			<div class="col-sm-9">
-				Rounds
+			<div class="col-sm-12">
+				<h2>Scores</h2>
+				<table class="table table-striped">
+					
+					<thead>
+						<th>Round</th>
+						<th>Judge</th>
+						<th>Appearance</th>
+						<th>Texture / Tenderness</th>
+						<th>Taste</th>
+						<th>Weighted Score</th>
+					</thead>
+					<tbody>
+					@foreach($team->scores as $score)
+						<tr>
+							<td>{{$score->scoreSheet->round->name}}</td>
+							<td>{{$score->scoreSheet->judge->id}}</td>
+							<td>{{$score->appearance}}</td>
+							<td>{{$score->texture}}</td>
+							<td>{{$score->taste}}</td>
+							<td>{{$score->total}}</td>
+						</tr>
+					@endforeach
+					</tbody>
+				</table>
+				<h2>Notes</h2>
+				<table class="table table-striped">
+					<tbody>
+					@foreach($team->notes as $note)
+						<tr>
+							<td>{{$note->round->name}}</td>
+							<td>Judge #{{$note->judge->id}}</td>
+							<td>{{$note->content}}</td>
+						</tr>
+					@endforeach
+					</tbody>
+				</table>
+				
+
 			</div>
-			<div class="col-sm-3">
-				Overall Scores
-			</div>
+			
 		</div>
 	</div>  
 	<div class="page-break"></div>  

@@ -48,6 +48,10 @@ class Event extends Model
     {
         return $this->hasMany('App\ScoreSheet');
     }
+    public function judgeNotes()
+    {
+        return $this->hasMany('App\JudgeNote');
+    }
     /*
     |--------------------------------------------------------------------------
     | SCOPES

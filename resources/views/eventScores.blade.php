@@ -29,12 +29,15 @@
             @endfor
             </tbody>
         </table>
-        <a href="{{url('events/'.$event->id.'/addScorecard')}}">Add Scorecard</a>
+        <p><a href="{{url('events/'.$event->id.'/addScorecard')}}">Add Scorecard</a></p>
+        <p><a href="{{url('events/'.$event->id.'/judgeNotes')}}">Judge Notes</a></p>
+
         <h3>Scores Recored</h3>
         <ul>
             @foreach ($rounds as $round)
                 <li @if($event->teams->count() * 6 == $recordedScores[$round->id]) style="color: green" @else style="color: red" @endif>{{$round->name}} - {{$event->teams->count() * 6}} Expected - {{$recordedScores[$round->id]}} Recorded</li>
             @endforeach
+            <li>Notes Recorded: {{$event->judgeNotes->count()}}</li>
         </ul>
         <h4><a href="{{url('/events/'.$event->id.'/resultsSheets')}}" target="blank">Results Sheets</a></h4>
     </div>

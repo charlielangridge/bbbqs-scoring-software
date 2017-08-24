@@ -7,6 +7,8 @@ use App\Judge;
 use App\Round;
 use App\Score;
 use App\ScoreSheet;
+use App\JudgeNote;
+
 use App\Team;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -364,10 +366,49 @@ class EventController extends Controller
     public function resultsSheets(Event $event)
     {
         $teams = $event->teams;
-        $pdf = \PDF::loadView('pdfs.scoreSheets', compact('event','teams'));
-        return $pdf->stream();
+        $teamResults = $teams;
+        foreach ($teamResults as $team) {
+            $team->notes = JudgeNote::where('event_id',$event->id)->where('team_id',$team->id)->get();
+            $team->scores  = Score::whereHas('scoresheet', function ($query) use ($event) {
+                    $query->where('event_id', $event->id);
+                })
+                ->where('team_id',$team->id)
+                ->get();
+            // dump($team);
+        }
+        // dd();
+        // $pdf = \PDF::loadView('pdfs.scoreSheets', compact('event','teamResults'));
+        // return $pdf->stream();
 
-        return view('pdfs.scoreSheets', compact('event','teams'));
+        return view('pdfs.scoreSheets', compact('event','teamResults'));
         dd($teams);
+    }
+
+    public function judgeNotes(Event $event)
+    {
+        $judgeNotes = $event->judgeNotes;
+        $page = 'events';
+        return view('eventJudgeNotes', compact('page','event','judgeNotes'));   
+    }
+
+    public function addJudgeNote(Event $event, Request $request)
+    {
+        $judgeNote = new JudgeNote;
+        $judgeNote->content = $request->comment;
+        $judgeNote->event_id = $event->id;
+        $judgeNote->judge_id = $request->judge_id;
+        $judgeNote->round_id = $request->round_id;
+        $judgeNote->team_id = $request->team_id;
+        $judgeNote->save();
+
+        return back();
+    }
+
+    public function deleteJudgeNote(Event $event, JudgeNote $note)
+    {
+        $note->delete();
+        return back();
+
+        return back();
     }
 }
