@@ -4,14 +4,15 @@ namespace App\Http\Controllers;
 
 use App\Event;
 use App\Judge;
+use App\JudgeNote;
+use App\Mail\TeamScores;
 use App\Round;
 use App\Score;
 use App\ScoreSheet;
-use App\JudgeNote;
-
 use App\Team;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 
 class EventController extends Controller
 {
@@ -384,9 +385,33 @@ class EventController extends Controller
         dd($teams);
     }
 
+
+    public function emailResultsSheets(Event $event)
+    {
+        $teams = $event->teams;
+        $teamResults = $teams;
+        foreach ($teamResults as $team) {
+            $team->notes = JudgeNote::where('event_id',$event->id)->where('team_id',$team->id)->get();
+            $team->scores  = Score::whereHas('scoresheet', function ($query) use ($event) {
+                    $query->where('event_id', $event->id);
+                })
+                ->where('team_id',$team->id)
+                ->get();
+        }
+        foreach ($teamResults as $teamResult) {
+            // return view('emails.teamScores', compact('teamResult', 'event'));
+            Mail::to($teamResult->email)->send(new TeamScores($event, $teamResult));
+            // dd($teamResult);
+        }
+
+        \Alert::success('Emails sent to teams!')->flash();
+        return back();
+       
+    }
+
     public function judgeNotes(Event $event)
     {
-        $judgeNotes = $event->judgeNotes;
+        $judgeNotes = JudgeNote::where('event_id', $event->id)->paginate(10);
         $page = 'events';
         return view('eventJudgeNotes', compact('page','event','judgeNotes'));   
     }

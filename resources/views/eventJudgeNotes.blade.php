@@ -15,7 +15,7 @@
     			<th></th>
     		</thead>
     		<tbody>
-    			@foreach($event->judgeNotes as $note)
+    			@foreach($judgeNotes as $note)
     			<tr>
     				<td>{{$note->team->name}}</td>
     				<td>{{$note->round->name}}</td>
@@ -26,6 +26,7 @@
     			@endforeach
     		</tbody>
     	</table>
+    	{{ $judgeNotes->links() }}
 	@endif
 
 	<form action="{{url('events/'.$event->id.'/addJudgeNote')}}" method="POST">

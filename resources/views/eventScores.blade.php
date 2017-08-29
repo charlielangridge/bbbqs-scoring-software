@@ -40,6 +40,20 @@
             <li>Notes Recorded: {{$event->judgeNotes->count()}}</li>
         </ul>
         <h4><a href="{{url('/events/'.$event->id.'/resultsSheets')}}" target="blank">Results Sheets</a></h4>
+        <p><a class="confirm" href="{{url('/events/'.$event->id.'/emailResultsSheets')}}">Email results and notes to teams</a></p>
     </div>
 </div>
+@endsection
+
+@section('footerScripts')
+<script>
+$(function() {
+    $('.confirm').click(function(e) {
+        e.preventDefault();
+        if (window.confirm("Are you sure?")) {
+            location.href = this.href;
+        }
+    });
+});
+</script>
 @endsection
